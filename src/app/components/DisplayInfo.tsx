@@ -40,19 +40,22 @@ const DisplayInfo = () => {
       const finalData = result.data
       setData(finalData)
       console.log(finalData)
+      const isoString = finalData.created_at || "";
+      if (isoString === "") {
+        setDate("N/A")
+      } else {
+        const date = new Date(isoString);
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const formatted = `${year}/${month}/${day}`;
+        setDate(formatted)
+      }
     } catch (err) {
       setData(emptyData)
       alert("User Not Found")
       console.log("ERROR:", err)
     }
-    const isoString = data?.created_at || "";
-    const date = new Date(isoString);
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-
-    const formatted = `${year}/${month}/${day}`;
-    setDate(formatted)
 
   }
 
